@@ -6342,21 +6342,21 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        const ref = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput("ref", { required: true });
-        const sha = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput("sha", { required: true });
-        const deploymentDomain = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput("deploymentDomain", { required: true, trimWhitespace: true });
-        const deploymentName = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput("deploymentName", { required: true, trimWhitespace: true });
-        const packageName = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput("packageName", { required: true, trimWhitespace: true });
-        const packageVersion = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput("packageVersion", { required: true, trimWhitespace: true });
-        const percentage = parseInt(_actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput("percentage", { required: true, trimWhitespace: true }), 10) | 0;
-        const token = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput("token", { required: true });
+        const ref = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("ref", { required: true });
+        const sha = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("sha", { required: true });
+        const deploymentDomain = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("deploymentDomain", { required: true, trimWhitespace: true });
+        const deploymentName = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("deploymentName", { required: true, trimWhitespace: true });
+        const packageName = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("packageName", { required: true, trimWhitespace: true });
+        const packageVersion = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("packageVersion", { required: true, trimWhitespace: true });
+        const percentage = parseInt(_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("percentage", { required: true, trimWhitespace: true }), 10) | 0;
+        const token = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("token", { required: true });
         if (isNaN(percentage) || percentage < 0 || percentage > 100) {
-            throw new Error(`Invalid percentage ${JSON.stringify(_actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput("percentage", { required: true }))}`);
+            throw new Error(`Invalid percentage ${JSON.stringify(_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("percentage", { required: true }))}`);
         }
-        const octokit = _actions_github__WEBPACK_IMPORTED_MODULE_1___default().getOctokit(token, {
+        const octokit = _actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit(token, {
             previews: ["ant-man-preview", "flash-preview"],
         });
-        const { owner, repo } = (_actions_github__WEBPACK_IMPORTED_MODULE_1___default().context.repo);
+        const { owner, repo } = _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo;
         const resp = yield octokit.rest.repos.createDeployment({
             owner,
             repo,
@@ -6385,13 +6385,13 @@ function main() {
             owner,
             deployment_id: data.id,
             environment_url: `https://${deploymentDomain}`,
-            log_url: `https://github.com/${owner}/${repo}/actions/runs/${(_actions_github__WEBPACK_IMPORTED_MODULE_1___default().context.runId)}`,
+            log_url: `https://github.com/${owner}/${repo}/actions/runs/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.runId}`,
             state: "queued",
         });
     });
 }
 main().catch(function (error) {
-    _actions_core__WEBPACK_IMPORTED_MODULE_0___default().setFailed(error.message);
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
     process.exit(1);
 });
 
