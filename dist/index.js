@@ -6374,6 +6374,7 @@ function main() {
                 prefix: packageName,
                 version: packageVersion,
                 rolloutName: deploymentName,
+                percentage
             },
         });
         if (resp.status >= 400) {

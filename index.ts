@@ -39,6 +39,7 @@ async function main() {
       prefix: packageName,
       version: packageVersion,
       rolloutName: deploymentName,
+      percentage
     },
   });
 
