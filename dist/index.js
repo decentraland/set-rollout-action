@@ -6344,7 +6344,8 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const ref = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("ref", { required: true });
         const sha = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("sha", { required: true });
-        const deploymentDomain = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("deploymentDomain", { required: true, trimWhitespace: true });
+        const deploymentPath = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("deploymentPath", { required: true, trimWhitespace: true });
+        const deploymentEnvironment = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("deploymentEnvironment", { required: true, trimWhitespace: true });
         const deploymentName = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("deploymentName", { required: true, trimWhitespace: true });
         const packageName = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("packageName", { required: true, trimWhitespace: true });
         const packageVersion = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("packageVersion", { required: true, trimWhitespace: true });
@@ -6361,8 +6362,8 @@ function main() {
             owner,
             repo,
             ref,
-            environment: deploymentDomain,
-            description: `Progressive deployment: ${deploymentName} in ${deploymentDomain} at ${percentage}%`,
+            environment: deploymentEnvironment,
+            description: `Progressive deployment: ${deploymentName} in ${deploymentPath} ${deploymentEnvironment} at ${percentage}%`,
             auto_merge: false,
             required_contexts: [],
             // this task is handled by the webhooks-receiver
@@ -6370,11 +6371,12 @@ function main() {
             payload: {
                 ref,
                 sha,
-                domain: deploymentDomain,
+                environment: deploymentEnvironment,
+                path: deploymentPath,
                 prefix: packageName,
                 version: packageVersion,
                 rolloutName: deploymentName,
-                percentage
+                percentage,
             },
         });
         if (resp.status >= 400) {
@@ -6385,7 +6387,7 @@ function main() {
             repo,
             owner,
             deployment_id: data.id,
-            environment_url: `https://${deploymentDomain}`,
+            environment_url: `https://decentraland.${deploymentEnvironment}/${deploymentPath}`,
             log_url: `https://github.com/${owner}/${repo}/actions/runs/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.runId}`,
             state: "queued",
         });

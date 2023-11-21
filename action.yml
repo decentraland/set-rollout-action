@@ -11,8 +11,11 @@ inputs:
     description: 'Commit sha to be deployed'
     required: true
 
-  deploymentDomain:
-    description: 'Domain to be deployed'
+  deploymentPath:
+    description: 'Path of app to be deployed'
+    required: true
+  deploymentEnvironment:
+    description: 'Environment of the deployment'
     required: true
   deploymentName:
     description: 'Name of the deployment'

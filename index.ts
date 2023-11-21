@@ -5,7 +5,8 @@ import { components } from "@octokit/openapi-types";
 async function main() {
   const ref = core.getInput("ref", { required: true });
   const sha = core.getInput("sha", { required: true });
-  const deploymentDomain = core.getInput("deploymentDomain", { required: true, trimWhitespace: true });
+  const deploymentPath = core.getInput("deploymentPath", { required: true, trimWhitespace: true });
+  const deploymentEnvironment = core.getInput("deploymentEnvironment", { required: true, trimWhitespace: true });
   const deploymentName = core.getInput("deploymentName", { required: true, trimWhitespace: true });
   const packageName = core.getInput("packageName", { required: true, trimWhitespace: true });
   const packageVersion = core.getInput("packageVersion", { required: true, trimWhitespace: true });
@@ -26,8 +27,8 @@ async function main() {
     owner,
     repo,
     ref,
-    environment: deploymentDomain,
-    description: `Progressive deployment: ${deploymentName} in ${deploymentDomain} at ${percentage}%`,
+    environment: deploymentEnvironment,
+    description: `Progressive deployment: ${deploymentName} in ${deploymentPath} ${deploymentEnvironment} at ${percentage}%`,
     auto_merge: false,
     required_contexts: [],
     // this task is handled by the webhooks-receiver
@@ -35,11 +36,12 @@ async function main() {
     payload: {
       ref,
       sha,
-      domain: deploymentDomain,
+      environment: deploymentEnvironment,
+      path: deploymentPath,
       prefix: packageName,
       version: packageVersion,
       rolloutName: deploymentName,
-      percentage
+      percentage,
     },
   });
 
@@ -53,7 +55,7 @@ async function main() {
     repo,
     owner,
     deployment_id: data.id,
-    environment_url: `https://${deploymentDomain}`,
+    environment_url: `https://decentraland.${deploymentEnvironment}/${deploymentPath}`,
     log_url: `https://github.com/${owner}/${repo}/actions/runs/${github.context.runId}`,
     state: "queued",
   });
