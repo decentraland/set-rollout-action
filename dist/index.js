@@ -29023,10 +29023,12 @@ async function main() {
     }
     // Check if the package was already deployed to the CDN
     try {
+        console.log("Checking if the package was deployed to the CDN...");
         const response = await fetch(`https://cdn.decentraland.org/${packageName}/${packageVersion}`, { method: "HEAD" });
         if (response.status >= 400) {
             throw new Error(`Package ${packageName}@${packageVersion} not found in the CDN`);
         }
+        console.log("Package found in the CDN!");
     }
     catch (error) {
         throw new Error(`Failed to check if the package was deployed to the CDN: ${isErrorWithMessage(error) ? error.message : "Unknown error"}`);
