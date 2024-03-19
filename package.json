@@ -7,17 +7,13 @@
     "build": "ncc build index.ts"
   },
   "dependencies": {
-    "@actions/core": "^1.4.0",
-    "@actions/github": "^5.0.0",
-    "@types/node": "^16.4.13",
-    "@vercel/ncc": "^0.29.0",
-    "typescript": "^4.3.5"
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0"
   },
   "prettier": {
     "printWidth": 120,
     "semi": true
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/decentraland/set-rollout-action.git"
@@ -28,5 +24,10 @@
   "bugs": {
     "url": "https://github.com/decentraland/set-rollout-action/issues"
   },
-  "homepage": "https://github.com/decentraland/set-rollout-action#readme"
+  "homepage": "https://github.com/decentraland/set-rollout-action#readme",
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@vercel/ncc": "^0.38.1",
+    "typescript": "^5.4.2"
+  }
 }
