@@ -2,6 +2,10 @@ import * as core from "@actions/core";
 import * as github from "@actions/github";
 import { components } from "@octokit/openapi-types";
 
+export function isErrorWithMessage(error: unknown): error is Error {
+  return error !== undefined && error !== null && typeof error === "object" && "message" in error;
+}
+
 async function main() {
   const ref = core.getInput("ref", { required: true });
   const sha = core.getInput("sha", { required: true });
@@ -15,6 +19,20 @@ async function main() {
 
   if (isNaN(percentage) || percentage < 0 || percentage > 100) {
     throw new Error(`Invalid percentage ${JSON.stringify(core.getInput("percentage", { required: true }))}`);
+  }
+
+  // Check if the package was already deployed to the CDN
+  try {
+    const response = await fetch(`https://cdn.decentraland.org/${packageName}/${packageVersion}`, { method: "HEAD" });
+    if (response.status >= 400) {
+      throw new Error(`Package ${packageName}@${packageVersion} not found in the CDN`);
+    }
+  } catch (error) {
+    throw new Error(
+      `Failed to check if the package was deployed to the CDN: ${
+        isErrorWithMessage(error) ? error.message : "Unknown error"
+      }`
+    );
   }
 
   const octokit = github.getOctokit(token, {
